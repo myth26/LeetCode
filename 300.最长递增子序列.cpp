@@ -6,25 +6,27 @@
 
 // @lc code=start
 #include <vector>
+#include <algorithm>
 using namespace std;
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int maxLen = 1;
-        for(int i = 0; i < nums.size(); i++){
-            int currLen = 1, currMax = -1;
-            for(int j = i + 1; j < nums.size(); j++){
-                if(nums[j] > nums[i]){
-                    if(j == i + 1) currMax = nums[i];
-                    if(nums[j] > currMax){
-                        currLen++;
-                        currMax = nums[j];
-                    } 
+        int n = nums.size();
+        vector<int> dp(n);
+        for(int i = 0; i < n; i++){
+            int maxLen = 1;
+            for(int j = 0; j < i; j++){
+                if(nums[i] > nums[j]){
+                    maxLen = max(maxLen, dp[j] + 1);
                 }
             }
-            if(currLen > maxLen) maxLen = currLen;
+            dp[i] = maxLen;
         }
-        return maxLen;
+        int ret = 0;
+        for(int i = 0; i < n; i++){
+            ret = max(ret,dp[i]);
+        }
+        return ret;
     }
 };
 // @lc code=end
