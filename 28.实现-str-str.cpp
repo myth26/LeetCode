@@ -15,15 +15,18 @@ public:
         int n = needle.size();
         int i = 0, begin = -1;
         while(i < haystack.size()){
-            if(haystack[i] != needle[0]) i++;
-            else{
+            if(haystack[i] == needle[0]){
                 begin = i;
                 for(int j = 1; j < n; j++){
-                    if(i+j >= haystack.size() || haystack[i+j] != needle[j]) begin = -1;
+                    if(i+j >= haystack.size() || haystack[i+j] != needle[j]){
+                        begin = -1;
+                        break;
+                    } 
                 }
                 if(begin != -1) return begin;
-                i++;
+                
             }
+            i++;
         }
         return begin;
     }
